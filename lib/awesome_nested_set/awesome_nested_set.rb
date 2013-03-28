@@ -543,7 +543,7 @@ module CollectiveIdea #:nodoc:
           # oracle 下子查询有异常 OCIError: ORA-00907: missing right parenthesis
           # highest_right_row = nested_set_scope(:order => "#{quoted_right_column_full_name} desc").limit(1).lock(true).first
           highest_right_row = nested_set_scope(:order => "#{quoted_right_column_full_name} desc").limit(1).select("id").first
-          highest_right_row = highest_right_row.class.find(highest_right_row.id,:lock =>true)
+          highest_right_row = highest_right_row.class.find(highest_right_row.id,:lock =>true) if highest_right_row
           maxright = highest_right_row ? (highest_right_row[right_column_name] || 0) : 0
           # adds the new node to the right of all existing nodes
           self[left_column_name] = maxright + 1
